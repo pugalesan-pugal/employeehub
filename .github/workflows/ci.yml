@@ -28,3 +28,6 @@ jobs:
 
       - name: Build application
         run: ./mvnw clean package
+
+      - name: Build Docker image
+        run: docker build -t employeehub:1.0 .
