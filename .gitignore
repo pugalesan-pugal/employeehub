@@ -37,3 +37,9 @@ target/
 .vscode/
 *.class
 actions-runner/
+
+
+terraform/terraform.tfvars
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*

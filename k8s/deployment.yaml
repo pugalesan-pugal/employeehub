@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: employeehub
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: employeehub
+
+  template:
+    metadata:
+      labels:
+        app: employeehub
+
+    spec:
+      containers:
+        - name: employeehub
+          image: ghcr.io/pugalesan-pugal/employeehub:latest
+
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: employeehub-config
+
+            - secretRef:
+                name: employeehub-secret
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10

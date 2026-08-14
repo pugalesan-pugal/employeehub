@@ -72,6 +72,13 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
 
+      #kuber
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl rollout status deployment/employeehub
+
       # 8. Deploy to Render
       - name: Deploy to Render
         shell: powershell
